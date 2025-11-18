@@ -154,6 +154,8 @@ This ensures you follow project-specific patterns and use the right tools automa
 
 ---
 
+**Watch the full explanation:** [YouTube](https://youtu.be/SAhOHNpdDa8)
+
 **Questions or improvements?** Open an issue or submit a PR.
 
 —TÂCHES

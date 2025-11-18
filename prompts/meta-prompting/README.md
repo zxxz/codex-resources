@@ -209,7 +209,7 @@ Developed by TÂCHES for systematic, high-quality Claude Code workflows.
 
 ---
 
-**Watch the full explanation:** [Stop Telling Claude Code What To Do](https://www.youtube.com/@tachesteaches)
+**Watch the full explanation:** [YouTube](https://youtu.be/8_7Sq6Vu0S4)
 
 **Questions or improvements?** Open an issue or submit a PR.
 
