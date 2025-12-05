@@ -37,8 +37,8 @@ Most developers don't naturally think through all these dimensions. This system 
 **Install globally** - commands work in any directory:
 
 ```bash
-cp create-prompt.md ~/.claude/commands/
-cp run-prompt.md ~/.claude/commands/
+cp create-prompt.md $CODEX_HOME/prompts/
+cp run-prompt.md $CODEX_HOME/prompts/
 ```
 
 **Create prompts directory per-project** (optional - created automatically if missing):
@@ -119,7 +119,7 @@ For complex projects, Claude may break your request into multiple prompts:
 **Global commands, per-project prompts:**
 
 ```
-~/.claude/commands/          # Install once
+$CODEX_HOME/prompts/          # Install once
   create-prompt.md
   run-prompt.md
 

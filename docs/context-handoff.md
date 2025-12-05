@@ -96,7 +96,7 @@ Implement user authentication with JWT tokens
 **Install globally** - works in any directory:
 
 ```bash
-cp whats-next.md ~/.claude/commands/
+cp whats-next.md $CODEX_HOME/prompts/
 ```
 
 The command works everywhere. Each project gets its own `whats-next.md` in the working directory.
@@ -140,7 +140,7 @@ Continuing from src/components/Dashboard.tsx:67..."
 
 **Global (install once):**
 ```
-~/.claude/commands/
+$CODEX_HOME/prompts/
   whats-next.md         # Command
 ```
 

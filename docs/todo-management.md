@@ -47,7 +47,7 @@ Lists todos, lets you select one, loads full context, and removes it from the li
 
 **Workflow detection:**
 - Reads `CLAUDE.md` for project-specific patterns
-- Checks `.claude/skills/` for matching workflows
+- Checks `$CODEX_HOME/skills/` for matching workflows
 - Matches file paths to domains (plugins/, mcp-servers/, etc.)
 - Presents choice: invoke skill or work directly
 
@@ -73,8 +73,8 @@ Lists todos, lets you select one, loads full context, and removes it from the li
 **Install globally** - these commands work in any directory:
 
 ```bash
-cp add-to-todos.md ~/.claude/commands/
-cp check-todos.md ~/.claude/commands/
+cp add-to-todos.md $CODEX_HOME/prompts/
+cp check-todos.md $CODEX_HOME/prompts/
 ```
 
 Once installed, the commands are available everywhere. Each project gets its own `TO-DOS.md` in its working directory - todos are captured per-project automatically.
@@ -119,7 +119,7 @@ Claude loads:
 
 **Global (install once, use everywhere):**
 ```
-~/.claude/commands/
+$CODEX_HOME/prompts/
   add-to-todos.md        # Add todo command
   check-todos.md         # Check/select todo command
 ```

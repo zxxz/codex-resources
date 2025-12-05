@@ -169,8 +169,8 @@ For research and plan outputs that may be large:
 - Simple tasks with known small outputs
 </streaming_writes>
 
-<claude_to_claude>
-For Claude-to-Claude consumption:
+<codex_to_codex>
+For Codex-to-Codex consumption:
 
 **Use heavy XML structure:**
 ```xml
@@ -199,7 +199,7 @@ For Claude-to-Claude consumption:
   <action priority="medium">Validate rate limits in sandbox</action>
 </next_actions>
 ```
-</claude_to_claude>
+</codex_to_codex>
 
 <human_consumption>
 For human consumption:
