@@ -91,7 +91,7 @@ description: What it does and when to use it (third person, specific triggers)
 - Maximum 64 characters
 - Lowercase letters, numbers, hyphens only
 - No XML tags
-- No reserved words: "anthropic", "claude"
+- Avoid vendor-reserved words (for example, product names)
 - Must match directory name exactly
 
 **Examples**:
@@ -100,7 +100,7 @@ description: What it does and when to use it (third person, specific triggers)
 - ✅ `setup-stripe-payments`
 - ❌ `PDF_Processor` (uppercase)
 - ❌ `helper` (vague)
-- ❌ `claude-helper` (reserved word)
+- ❌ `vendor-helper` (too vendor-specific)
 </name_field>
 
 <description_field>
@@ -171,7 +171,7 @@ Examples: `generate-ai-images`
 <avoid_patterns>
 - Vague: `helper`, `utils`, `tools`
 - Generic: `documents`, `data`, `files`
-- Reserved words: `anthropic-helper`, `claude-tools`
+- Reserved words: vendor-specific prefixes (avoid product names)
 - Inconsistent: Directory `facebook-ads` but name `facebook-ads-manager`
 </avoid_patterns>
 </naming_conventions>

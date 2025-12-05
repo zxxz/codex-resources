@@ -45,7 +45,7 @@ skill-name/
 **Reference pattern**: In SKILL.md, reference scripts using the `scripts/` path:
 
 ```bash
-python ~/.claude/skills/skill-name/scripts/analyze.py input.har
+python $CODEX_HOME/skills/skill-name/scripts/analyze.py input.har
 ```
 </scripts_directory>
 </file_organization>
@@ -136,9 +136,9 @@ RETRIES = 5   # Why 5?
 
 <package_dependencies>
 <runtime_constraints>
-Skills run in code execution environment with platform-specific limitations:
-- **claude.ai**: Can install packages from npm and PyPI
-- **Anthropic API**: No network access and no runtime package installation
+Skills run in code execution environments with platform-specific limitations:
+- **Codex desktop app**: Can install packages from npm and PyPI
+- **API-only usage**: Typically no network access and no runtime package installation
 </runtime_constraints>
 
 <guidance>

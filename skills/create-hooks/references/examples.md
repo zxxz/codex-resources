@@ -72,7 +72,7 @@ Real-world hook configurations ready to use.
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '\"[\" + (.timestamp // now | todate) + \"] \" + .tool_input.command + \" - \" + (.tool_input.description // \"No description\")' >> ~/.claude/bash-log.txt"
+            "command": "jq -r '\"[\" + (.timestamp // now | todate) + \"] \" + .tool_input.command + \" - \" + (.tool_input.description // \"No description\")' >> $CODEX_HOME/bash-log.txt"
           }
         ]
       }
@@ -91,7 +91,7 @@ Real-world hook configurations ready to use.
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '\"[\" + (now | todate) + \"] \" + .tool_name + \": \" + .tool_input.file_path' >> ~/.claude/file-operations.log"
+            "command": "jq -r '\"[\" + (now | todate) + \"] \" + .tool_name + \": \" + .tool_input.file_path' >> $CODEX_HOME/file-operations.log"
           }
         ]
       }
@@ -110,7 +110,7 @@ Real-world hook configurations ready to use.
         "hooks": [
           {
             "type": "command",
-            "command": "jq '. + {timestamp: now}' >> ~/.claude/mcp-audit.jsonl"
+            "command": "jq '. + {timestamp: now}' >> $CODEX_HOME/mcp-audit.jsonl"
           }
         ]
       }
@@ -330,7 +330,7 @@ echo '{"decision": "approve", "reason": "File is not protected"}'
 #!/bin/bash
 
 # Read sprint info from file
-sprint_info=$(cat "$CLAUDE_PROJECT_DIR/.sprint-context.txt" 2>/dev/null || echo "No sprint context available")
+sprint_info=$(cat "$CODEX_PROJECT_DIR/.sprint-context.txt" 2>/dev/null || echo "No sprint context available")
 
 # Return as SessionStart context
 jq -n \
@@ -410,7 +410,7 @@ cd "$cwd" || exit 1
 # Check if there are changes
 if ! git diff --quiet; then
   git add -A
-  git commit -m "chore: auto-commit from claude session" --no-verify
+  git commit -m "chore: auto-commit from codex session" --no-verify
   echo '{"systemMessage": "Changes auto-committed"}'
 fi
 ```
@@ -503,7 +503,7 @@ transcript_path=$(echo "$input" | jq -r '.transcript_path')
 session_id=$(echo "$input" | jq -r '.session_id')
 
 # Create archive directory
-archive_dir="$HOME/.claude/archives"
+archive_dir="$HOME/$CODEX_HOME/archives"
 mkdir -p "$archive_dir"
 
 # Copy transcript with timestamp
@@ -522,7 +522,7 @@ echo "Session archived to $archive_dir"
         "hooks": [
           {
             "type": "command",
-            "command": "jq '. + {ended_at: now}' >> ~/.claude/session-stats.jsonl"
+            "command": "jq '. + {ended_at: now}' >> $CODEX_HOME/session-stats.jsonl"
           }
         ]
       }
@@ -625,7 +625,7 @@ esac
 
 ## Project-Specific Hooks
 
-Use `$CLAUDE_PROJECT_DIR` for project-specific hooks:
+Use `$CODEX_HOME` for project-specific hooks (set it to your project workspace when you want hooks versioned with the repo):
 
 ```json
 {
@@ -635,7 +635,7 @@ Use `$CLAUDE_PROJECT_DIR` for project-specific hooks:
         "hooks": [
           {
             "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/init-session.sh"
+            "command": "$CODEX_HOME/hooks/init-session.sh"
           }
         ]
       }
@@ -646,7 +646,7 @@ Use `$CLAUDE_PROJECT_DIR` for project-specific hooks:
         "hooks": [
           {
             "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/validate-changes.sh"
+            "command": "$CODEX_HOME/hooks/validate-changes.sh"
           }
         ]
       }

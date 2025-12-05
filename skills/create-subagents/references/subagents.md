@@ -37,8 +37,8 @@ Step-by-step process for consistency.
 <storage_locations>
 | Type | Location | Scope | Priority |
 |------|----------|-------|----------|
-| **Project** | `.claude/agents/` | Current project only | Highest |
-| **User** | `~/.claude/agents/` | All projects | Lower |
+| **Project** | `$CODEX_HOME/agents/` | Current project only | Highest |
+| **User** | `$CODEX_HOME/agents/` | All projects | Lower |
 | **CLI** | `--agents` flag | Current session | Medium |
 | **Plugin** | Plugin's `agents/` dir | All projects | Lowest |
 
@@ -213,8 +213,8 @@ Users can explicitly request a subagent:
 
 <direct_file_management>
 **Alternative**: Edit subagent files directly:
-- Project: `.claude/agents/subagent-name.md`
-- User: `~/.claude/agents/subagent-name.md`
+- Project: `$CODEX_HOME/agents/subagent-name.md`
+- User: `$CODEX_HOME/agents/subagent-name.md`
 
 Follow the file format specified above (YAML frontmatter + system prompt).
 </direct_file_management>
@@ -223,7 +223,7 @@ Follow the file format specified above (YAML frontmatter + system prompt).
 **Temporary**: Define subagents via CLI for session-specific use:
 
 ```bash
-claude --agents '{
+codex --agents '{
   "code-reviewer": {
     "description": "Expert code reviewer. Use proactively after code changes.",
     "prompt": "You are a senior code reviewer. Focus on quality, security, and best practices.",

@@ -77,7 +77,7 @@ Current changes: ! `git status`
 
 **Source**: Official Claude Code documentation
 
-**File**: `.claude/commands/optimize.md`
+**File**: `$CODEX_HOME/prompts/optimize.md`
 ```markdown
 ---
 description: Analyze the performance of this code and suggest three specific optimizations
@@ -110,7 +110,7 @@ Claude analyzes code in the current conversation context.
 
 ### Pattern: Security Review
 
-**File**: `.claude/commands/security-review.md`
+**File**: `$CODEX_HOME/prompts/security-review.md`
 ```markdown
 ---
 description: Review this code for security vulnerabilities

@@ -1,10 +1,12 @@
-# TÂCHES Claude Code Resources
+# TÂCHES Codex Resources
 
-A growing collection of custom Claude Code resources built for real workflows.
+This repository is a personal fork of the original work by TÂCHES (see https://github.com/glittercowboy/taches-cc-resources). All credit for the ideas, prompts, and structure goes to the upstream author; this fork exists solely for my own experimentation and learning with Codex and should be treated as an informal, exploratory project.
+
+A growing collection of custom Codex resources built for real workflows.
 
 ## Philosophy
 
-When you use a tool like Claude Code, it's your responsibility to assume everything is possible.
+When you use a tool like Codex, it's your responsibility to assume everything is possible.
 
 I built these tools using that mindset.
 
@@ -20,12 +22,11 @@ Dream big. Happy building.
 - **Thinking Models**: Mental frameworks (first principles, inversion, 80/20, etc.)
 - **Deep Analysis**: Systematic debugging methodology with evidence and hypothesis testing
 
-**[Skills](#skills)** (7 total) - Autonomous workflows that research, generate, and self-heal
-- **Create Plans**: Hierarchical project planning for solo developer + Claude workflows
+- **Create Plans**: Hierarchical project planning for solo developer + Codex workflows
 - **Create Agent Skills**: Build new skills by describing what you want
 - **Create Meta-Prompts**: Generate staged workflow prompts with dependency detection
 - **Create Slash Commands**: Build custom commands with proper structure
-- **Create Subagents**: Build specialized Claude instances for isolated contexts
+- **Create Subagents**: Build specialized Codex instances for isolated contexts
 - **Create Hooks**: Build event-driven automation
 - **Debug Like Expert**: Systematic debugging with evidence gathering and hypothesis testing
 
@@ -36,39 +37,30 @@ Dream big. Happy building.
 
 ## Installation
 
-### Option 1: Plugin Install (Recommended)
+### Manual Install
 
 ```bash
-# Add the marketplace
-claude plugin marketplace add glittercowboy/taches-cc-resources
+# Clone your fork of this repository
+git clone https://github.com/<your-username>/codex-resources.git
+cd codex-resources
 
-# Install the plugin
-claude plugin install taches-cc-resources
-```
+# Set CODEX_HOME to the desired Codex resources directory (per-project or global)
+export CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
 
-Start a new Claude Code session to use the commands and skills.
-
-### Option 2: Manual Install
-
-```bash
-# Clone the repo
-git clone https://github.com/glittercowboy/taches-cc-resources.git
-cd taches-cc-resources
-
-# Install commands
-cp -r commands/* ~/.claude/commands/
+# Install commands (Codex stores slash commands under prompts)
+cp -r commands/* "$CODEX_HOME/prompts/"
 
 # Install skills
-cp -r skills/* ~/.claude/skills/
+cp -r skills/* "$CODEX_HOME/skills/"
 ```
 
-Commands install globally to `~/.claude/commands/`. Skills install to `~/.claude/skills/`. Project-specific data (prompts, todos) lives in each project's working directory.
+Commands install to `$CODEX_HOME/prompts/`. Skills install to `$CODEX_HOME/skills/`. Project-specific data (prompts, todos) lives in each project's working directory. Setting `CODEX_HOME` per project allows isolated Codex setups when needed.
 
 ## Commands
 
 ### Meta-Prompting
 
-Separate analysis from execution. Describe what you want in natural language, Claude generates a rigorous prompt, then runs it in a fresh sub-agent context.
+Separate analysis from execution. Describe what you want in natural language, Codex generates a rigorous prompt, then runs it in a fresh sub-agent context.
 
 - [`/create-prompt`](./commands/create-prompt.md) - Generate optimized prompts with XML structure
 - [`/run-prompt`](./commands/run-prompt.md) - Execute saved prompts in sub-agent contexts
@@ -143,11 +135,11 @@ Specialized subagents used by the audit commands.
 
 ### [Create Plans](./skills/create-plans/)
 
-Hierarchical project planning optimized for solo developer + Claude. Create executable plans that Claude runs, not enterprise documentation that sits unused.
+Hierarchical project planning optimized for solo developer + Codex. Create executable plans that Codex runs, not enterprise documentation that sits unused.
 
 **PLAN.md IS the prompt** - not documentation that gets transformed later. Brief → Roadmap → Research (if needed) → PLAN.md → Execute → SUMMARY.md.
 
-**Domain-aware:** Optionally loads framework-specific expertise from `~/.claude/skills/expertise/` (e.g., macos-apps, iphone-apps) to make plans concrete instead of generic. Domain expertise skills are created with [create-agent-skills](#create-agent-skills) - exhaustive knowledge bases (5k-10k+ lines) that make task specifications framework-appropriate.
+**Domain-aware:** Optionally loads framework-specific expertise from `$CODEX_HOME/skills/expertise/` (e.g., macos-apps, iphone-apps) to make plans concrete instead of generic. Domain expertise skills are created with [create-agent-skills](#create-agent-skills) - exhaustive knowledge bases (5k-10k+ lines) that make task specifications framework-appropriate.
 
 **Quality controls:** Research includes verification checklists, blind spots review, critical claims audits, and streaming writes to prevent gaps and token limit failures.
 
@@ -163,7 +155,7 @@ Build skills by describing what you want. Asks clarifying questions, researches 
 
 **Two types of skills:**
 1. **Task-execution skills** - Regular skills that perform specific operations
-2. **Domain expertise skills** - Exhaustive knowledge bases (5k-10k+ lines) that live in `~/.claude/skills/expertise/` and provide framework-specific context to other skills like [create-plans](#create-plans)
+2. **Domain expertise skills** - Exhaustive knowledge bases (5k-10k+ lines) that live in `$CODEX_HOME/skills/expertise/` and provide framework-specific context to other skills like [create-plans](#create-plans)
 
 **Context-aware:** Detects if you're in a skill directory and presents relevant options. Progressive disclosure guides you through complex choices.
 
@@ -175,7 +167,7 @@ Commands: `/create-agent-skill`, `/heal-skill`, `/audit-skill`
 
 The skill-based evolution of the meta-prompting system. Builds prompts with structured outputs (research.md, plan.md) that subsequent prompts can parse. Adds automatic dependency detection to chain research → plan → implement workflows.
 
-**Note:** For end-to-end project building, consider [create-plans](#create-plans) - it's the more structured evolution of this approach with full lifecycle management (brief → roadmap → execution → handoffs). Use create-meta-prompts for abstract workflows and Claude→Claude pipelines. Use create-plans for actually building projects.
+**Note:** For end-to-end project building, consider [create-plans](#create-plans) - it's the more structured evolution of this approach with full lifecycle management (brief → roadmap → execution → handoffs). Use create-meta-prompts for abstract workflows and Codex-to-Codex pipelines. Use create-plans for actually building projects.
 
 Commands: `/create-meta-prompt`
 
@@ -187,7 +179,7 @@ Commands: `/create-slash-command`, `/audit-slash-command`
 
 ### [Create Subagents](./skills/create-subagents/)
 
-Build specialized Claude instances that run in isolated contexts. Describe the agent's purpose, get optimized system prompts with the right tool access and orchestration patterns.
+Build specialized Codex instances that run in isolated contexts. Describe the agent's purpose, get optimized system prompts with the right tool access and orchestration patterns.
 
 Commands: `/create-subagent`, `/audit-subagent`
 
@@ -209,9 +201,9 @@ Commands: `/debug`
 
 **For building projects:** Use `/create-plan` to invoke the [create-plans](#create-plans) skill. After planning, use `/run-plan <path-to-PLAN.md>` to execute phases with intelligent segmentation. This provides hierarchical planning (BRIEF.md → ROADMAP.md → phases/PLAN.md), domain-aware task generation, context management with handoffs, and git versioning.
 
-**For domain expertise:** Use [create-agent-skills](#create-agent-skills) to create exhaustive knowledge bases in `~/.claude/skills/expertise/`. These skills are automatically loaded by create-plans to make task specifications framework-specific instead of generic.
+**For domain expertise:** Use [create-agent-skills](#create-agent-skills) to create exhaustive knowledge bases in `$CODEX_HOME/skills/expertise/`. These skills are automatically loaded by create-plans to make task specifications framework-specific instead of generic.
 
-**Other tools:** The [create-meta-prompts](#create-meta-prompts-1) skill and `/create-prompt` + `/run-prompt` commands are available for custom Claude→Claude pipelines that don't fit the project planning structure.
+**Other tools:** The [create-meta-prompts](#create-meta-prompts) skill and `/create-prompt` + `/run-prompt` commands are available for custom Codex-to-Codex pipelines that don't fit the project planning structure.
 
 ---
 

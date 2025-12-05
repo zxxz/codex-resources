@@ -58,7 +58,7 @@ Need to execute a hook?
 ```json
 {
   "type": "command",
-  "command": "jq -r '\"\\(.tool_input.command) - \\(.tool_input.description // \\\"No description\\\")\"' >> ~/.claude/bash-log.txt"
+  "command": "jq -r '\"\\(.tool_input.command) - \\(.tool_input.description // \\\"No description\\\")\"' >> $CODEX_HOME/bash-log.txt"
 }
 ```
 

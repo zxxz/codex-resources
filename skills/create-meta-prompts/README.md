@@ -39,12 +39,12 @@ Describe your task. Claude creates a prompt optimized for its purpose.
 
 **Install command** (global):
 ```bash
-cp commands/*.md ~/.claude/commands/
+cp commands/*.md $CODEX_HOME/prompts/
 ```
 
 **Install skill**:
 ```bash
-cp -r skills/* ~/.claude/skills/
+cp -r skills/* $CODEX_HOME/skills/
 ```
 
 ## Example Workflow

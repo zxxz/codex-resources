@@ -51,7 +51,7 @@ Total: ~15 tokens, semantic meaning built-in
 Savings compound across all skills in the ecosystem.
 </token_efficiency>
 
-<claude_performance>
+<codex_performance>
 Claude performs better with pure XML because:
 - Unambiguous section boundaries reduce parsing errors
 - Semantic tags convey intent directly (no inference needed)
@@ -60,7 +60,7 @@ Claude performs better with pure XML because:
 - Progressive disclosure works more reliably
 
 Pure XML structure is not just a style preference—it's a performance optimization.
-</claude_performance>
+</codex_performance>
 </why_xml>
 
 <critical_rule>

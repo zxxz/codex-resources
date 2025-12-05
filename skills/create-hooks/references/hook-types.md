@@ -12,7 +12,7 @@ Complete reference for all Claude Code hook events.
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "~/.claude/projects/.../session.jsonl",
+  "transcript_path": "$CODEX_HOME/projects/.../session.jsonl",
   "cwd": "/current/working/directory",
   "permission_mode": "default",
   "hook_event_name": "PreToolUse",
@@ -75,7 +75,7 @@ Complete reference for all Claude Code hook events.
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "~/.claude/projects/.../session.jsonl",
+  "transcript_path": "$CODEX_HOME/projects/.../session.jsonl",
   "cwd": "/current/working/directory",
   "permission_mode": "default",
   "hook_event_name": "PostToolUse",
@@ -113,7 +113,7 @@ Complete reference for all Claude Code hook events.
         "hooks": [
           {
             "type": "command",
-            "command": "prettier --write $CLAUDE_PROJECT_DIR",
+            "command": "prettier --write $CODEX_PROJECT_DIR",
             "timeout": 10000
           }
         ]
@@ -135,7 +135,7 @@ Complete reference for all Claude Code hook events.
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "~/.claude/projects/.../session.jsonl",
+  "transcript_path": "$CODEX_HOME/projects/.../session.jsonl",
   "cwd": "/current/working/directory",
   "permission_mode": "default",
   "hook_event_name": "UserPromptSubmit",
@@ -189,7 +189,7 @@ Complete reference for all Claude Code hook events.
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "~/.claude/projects/.../session.jsonl",
+  "transcript_path": "$CODEX_HOME/projects/.../session.jsonl",
   "cwd": "/current/working/directory",
   "permission_mode": "default",
   "hook_event_name": "Stop",
@@ -246,7 +246,7 @@ Complete reference for all Claude Code hook events.
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "~/.claude/projects/.../session.jsonl",
+  "transcript_path": "$CODEX_HOME/projects/.../session.jsonl",
   "cwd": "/current/working/directory",
   "permission_mode": "default",
   "hook_event_name": "SubagentStop",
@@ -292,7 +292,7 @@ Complete reference for all Claude Code hook events.
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "~/.claude/projects/.../session.jsonl",
+  "transcript_path": "$CODEX_HOME/projects/.../session.jsonl",
   "cwd": "/current/working/directory",
   "permission_mode": "default",
   "hook_event_name": "SessionStart",
@@ -326,7 +326,7 @@ Complete reference for all Claude Code hook events.
         "hooks": [
           {
             "type": "command",
-            "command": "cat $CLAUDE_PROJECT_DIR/.sprint-context.txt | jq -Rs '{\"hookSpecificOutput\": {\"hookEventName\": \"SessionStart\", \"additionalContext\": .}}'"
+            "command": "cat $CODEX_PROJECT_DIR/.sprint-context.txt | jq -Rs '{\"hookSpecificOutput\": {\"hookEventName\": \"SessionStart\", \"additionalContext\": .}}'"
           }
         ]
       }
@@ -347,7 +347,7 @@ Complete reference for all Claude Code hook events.
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "~/.claude/projects/.../session.jsonl",
+  "transcript_path": "$CODEX_HOME/projects/.../session.jsonl",
   "cwd": "/current/working/directory",
   "permission_mode": "default",
   "hook_event_name": "SessionEnd",
@@ -373,7 +373,7 @@ Complete reference for all Claude Code hook events.
         "hooks": [
           {
             "type": "command",
-            "command": "cp $transcript_path $CLAUDE_PROJECT_DIR/.claude/archives/$(date +%Y%m%d-%H%M%S).jsonl"
+            "command": "cp $transcript_path $CODEX_HOME/archives/$(date +%Y%m%d-%H%M%S).jsonl"
           }
         ]
       }
@@ -394,7 +394,7 @@ Complete reference for all Claude Code hook events.
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "~/.claude/projects/.../session.jsonl",
+  "transcript_path": "$CODEX_HOME/projects/.../session.jsonl",
   "cwd": "/current/working/directory",
   "permission_mode": "default",
   "hook_event_name": "PreCompact",
@@ -429,7 +429,7 @@ Complete reference for all Claude Code hook events.
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "~/.claude/projects/.../session.jsonl",
+  "transcript_path": "$CODEX_HOME/projects/.../session.jsonl",
   "cwd": "/current/working/directory",
   "permission_mode": "default",
   "hook_event_name": "Notification"
