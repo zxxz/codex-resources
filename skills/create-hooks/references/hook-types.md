@@ -1,6 +1,6 @@
 # Hook Types and Events
 
-Complete reference for all Claude Code hook events.
+Complete reference for all Codex hook events.
 
 ## PreToolUse
 
@@ -12,7 +12,7 @@ Complete reference for all Claude Code hook events.
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "~/.claude/projects/.../session.jsonl",
+  "transcript_path": "~/.codex/projects/.../session.jsonl",
   "cwd": "/current/working/directory",
   "permission_mode": "default",
   "hook_event_name": "PreToolUse",
@@ -75,7 +75,7 @@ Complete reference for all Claude Code hook events.
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "~/.claude/projects/.../session.jsonl",
+  "transcript_path": "~/.codex/projects/.../session.jsonl",
   "cwd": "/current/working/directory",
   "permission_mode": "default",
   "hook_event_name": "PostToolUse",
@@ -113,7 +113,7 @@ Complete reference for all Claude Code hook events.
         "hooks": [
           {
             "type": "command",
-            "command": "prettier --write $CLAUDE_PROJECT_DIR",
+            "command": "prettier --write .",
             "timeout": 10000
           }
         ]
@@ -127,7 +127,7 @@ Complete reference for all Claude Code hook events.
 
 ## UserPromptSubmit
 
-**When it fires**: User submits a prompt to Claude
+**When it fires**: User submits a prompt to Codex
 
 **Can block**: Yes
 
@@ -135,7 +135,7 @@ Complete reference for all Claude Code hook events.
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "~/.claude/projects/.../session.jsonl",
+  "transcript_path": "~/.codex/projects/.../session.jsonl",
   "cwd": "/current/working/directory",
   "permission_mode": "default",
   "hook_event_name": "UserPromptSubmit",
@@ -181,7 +181,7 @@ Complete reference for all Claude Code hook events.
 
 ## Stop
 
-**When it fires**: Claude attempts to stop working
+**When it fires**: Codex attempts to stop working
 
 **Can block**: Yes
 
@@ -189,7 +189,7 @@ Complete reference for all Claude Code hook events.
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "~/.claude/projects/.../session.jsonl",
+  "transcript_path": "~/.codex/projects/.../session.jsonl",
   "cwd": "/current/working/directory",
   "permission_mode": "default",
   "hook_event_name": "Stop",
@@ -201,7 +201,7 @@ Complete reference for all Claude Code hook events.
 ```json
 {
   "decision": "block" | undefined,
-  "reason": "Why Claude should continue",
+  "reason": "Why Codex should continue",
   "continue": true,
   "systemMessage": "Additional instructions"
 }
@@ -246,7 +246,7 @@ Complete reference for all Claude Code hook events.
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "~/.claude/projects/.../session.jsonl",
+  "transcript_path": "~/.codex/projects/.../session.jsonl",
   "cwd": "/current/working/directory",
   "permission_mode": "default",
   "hook_event_name": "SubagentStop",
@@ -284,7 +284,7 @@ Complete reference for all Claude Code hook events.
 
 ## SessionStart
 
-**When it fires**: At the beginning of a Claude session
+**When it fires**: At the beginning of a Codex session
 
 **Can block**: No
 
@@ -292,7 +292,7 @@ Complete reference for all Claude Code hook events.
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "~/.claude/projects/.../session.jsonl",
+  "transcript_path": "~/.codex/projects/.../session.jsonl",
   "cwd": "/current/working/directory",
   "permission_mode": "default",
   "hook_event_name": "SessionStart",
@@ -326,7 +326,7 @@ Complete reference for all Claude Code hook events.
         "hooks": [
           {
             "type": "command",
-            "command": "cat $CLAUDE_PROJECT_DIR/.sprint-context.txt | jq -Rs '{\"hookSpecificOutput\": {\"hookEventName\": \"SessionStart\", \"additionalContext\": .}}'"
+            "command": "cat $PWD/.sprint-context.txt | jq -Rs '{\"hookSpecificOutput\": {\"hookEventName\": \"SessionStart\", \"additionalContext\": .}}'"
           }
         ]
       }
@@ -339,7 +339,7 @@ Complete reference for all Claude Code hook events.
 
 ## SessionEnd
 
-**When it fires**: When a Claude session ends
+**When it fires**: When a Codex session ends
 
 **Can block**: No (cannot prevent session end)
 
@@ -347,7 +347,7 @@ Complete reference for all Claude Code hook events.
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "~/.claude/projects/.../session.jsonl",
+  "transcript_path": "~/.codex/projects/.../session.jsonl",
   "cwd": "/current/working/directory",
   "permission_mode": "default",
   "hook_event_name": "SessionEnd",
@@ -373,7 +373,7 @@ Complete reference for all Claude Code hook events.
         "hooks": [
           {
             "type": "command",
-            "command": "cp $transcript_path $CLAUDE_PROJECT_DIR/.claude/archives/$(date +%Y%m%d-%H%M%S).jsonl"
+            "command": "cp $transcript_path $PWD/.codex/archives/$(date +%Y%m%d-%H%M%S).jsonl"
           }
         ]
       }
@@ -394,7 +394,7 @@ Complete reference for all Claude Code hook events.
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "~/.claude/projects/.../session.jsonl",
+  "transcript_path": "~/.codex/projects/.../session.jsonl",
   "cwd": "/current/working/directory",
   "permission_mode": "default",
   "hook_event_name": "PreCompact",
@@ -421,7 +421,7 @@ Complete reference for all Claude Code hook events.
 
 ## Notification
 
-**When it fires**: Claude needs user input (awaiting response)
+**When it fires**: Codex needs user input (awaiting response)
 
 **Can block**: No
 
@@ -429,7 +429,7 @@ Complete reference for all Claude Code hook events.
 ```json
 {
   "session_id": "abc123",
-  "transcript_path": "~/.claude/projects/.../session.jsonl",
+  "transcript_path": "~/.codex/projects/.../session.jsonl",
   "cwd": "/current/working/directory",
   "permission_mode": "default",
   "hook_event_name": "Notification"
@@ -453,7 +453,7 @@ Complete reference for all Claude Code hook events.
         "hooks": [
           {
             "type": "command",
-            "command": "osascript -e 'display notification \"Claude needs input\" with title \"Claude Code\"'"
+            "command": "osascript -e 'display notification \"Codex needs input\" with title \"Codex\"'"
           }
         ]
       }

@@ -191,7 +191,7 @@ Examples:
         "hooks": [
           {
             "type": "command",
-            "command": "prettier --write $CLAUDE_PROJECT_DIR"
+            "command": "prettier --write ."
           }
         ]
       }
@@ -303,7 +303,7 @@ Each matcher is evaluated independently. A tool can match multiple matchers.
 
 ### Enable debug mode
 ```bash
-claude --debug
+codex --debug
 ```
 
 Debug output shows:
@@ -404,7 +404,7 @@ Matches: Everything except `Read`
 ```
 Matches: `Bash`, `bash`, `BASH`
 
-(Note: Claude Code tools are PascalCase by convention, so this is rarely needed)
+(Note: Codex tools are PascalCase by convention, so this is rarely needed)
 
 ---
 
@@ -446,7 +446,7 @@ Do this:
 
 ## Tool Name Reference
 
-Common Claude Code tool names:
+Common Codex tool names:
 - `Bash`
 - `BashOutput`
 - `KillShell`
@@ -467,4 +467,4 @@ Common Claude Code tool names:
 
 MCP tools: `mcp__{server}__{tool}` (varies by installed servers)
 
-Run `claude --debug` and watch tool calls to discover available tool names.
+Run `codex --debug` and watch tool calls to discover available tool names.

@@ -372,7 +372,6 @@ codesign -d --entitlements - MyApp.app
 <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
 <true/>
 
-<!-- Disable library validation (for plugins) -->
 <key>com.apple.security.cs.disable-library-validation</key>
 <true/>
 

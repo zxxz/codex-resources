@@ -1,12 +1,12 @@
 # create-plans
 
-**Hierarchical project planning optimized for solo developer + Claude**
+**Hierarchical project planning optimized for solo developer + Codex**
 
-Create executable plans that Claude can run, not enterprise documentation that sits unused.
+Create executable plans that Codex can run, not enterprise documentation that sits unused.
 
 ## Philosophy
 
-**You are the visionary. Claude is the builder.**
+**You are the visionary. Codex is the builder.**
 
 No teams. No stakeholders. No ceremonies. No coordination overhead.
 
@@ -35,7 +35,7 @@ RESEARCH.md       → Research prompt (for unknowns - optional)
     ↓
 FINDINGS.md       → Research output (if research done)
     ↓
-PLAN.md           → THE PROMPT (Claude executes this)
+PLAN.md           → THE PROMPT (Codex executes this)
     ↓
 SUMMARY.md        → Outcome (existence = phase complete)
 ```
@@ -120,7 +120,7 @@ Specific. Executable. Framework-appropriate.
 **Structure of domain skills:**
 
 ```
-~/.claude/skills/expertise/[domain]/
+~/.codex/skills/expertise/[domain]/
 ├── SKILL.md              # Router + essential principles
 ├── workflows/            # build-new-app, add-feature, debug-app, etc.
 └── references/           # Exhaustive domain knowledge (often 10k+ lines)
@@ -136,13 +136,13 @@ Specific. Executable. Framework-appropriate.
 - `iphone-apps` - Swift/SwiftUI iOS
 - `unity-games` - Unity game development
 - `swift-midi-apps` - MIDI/audio apps
-- `with-agent-sdk` - Claude Agent SDK apps
+- `with-agent-sdk` - Codex Agent SDK apps
 - `nextjs-ecommerce` - Next.js e-commerce
 
 **How it works:**
 
 1. Skill infers domain from your request ("build a macOS app" → build-macos-apps)
-2. Before creating PLAN.md, reads all `~/.claude/skills/build/macos-apps/references/*.md`
+2. Before creating PLAN.md, reads all `~/.codex/skills/build/macos-apps/references/*.md`
 3. Uses that exhaustive knowledge to write framework-specific tasks
 4. Result: Plans that match your actual tech stack with all the details
 
@@ -184,8 +184,8 @@ See `references/research-pitfalls.md` for known mistakes and prevention.
 
 ## Key Principles
 
-### Solo Developer + Claude
-Planning for ONE person (you) and ONE implementer (Claude). No team coordination, stakeholder management, or enterprise processes.
+### Solo Developer + Codex
+Planning for ONE person (you) and ONE implementer (Codex). No team coordination, stakeholder management, or enterprise processes.
 
 ### Plans Are Prompts
 PLAN.md IS the execution prompt. It contains objective, context (@file references), tasks (Files/Action/Verify/Done), and verification steps.

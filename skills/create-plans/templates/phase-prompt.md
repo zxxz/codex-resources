@@ -19,10 +19,10 @@ Output: [What artifacts will be created]
 </objective>
 
 <execution_context>
-@~/.claude/skills/create-plans/workflows/execute-phase.md
-@~/.claude/skills/create-plans/templates/summary.md
+@~/.codex/skills/create-plans/workflows/execute-phase.md
+@~/.codex/skills/create-plans/templates/summary.md
 [If plan contains checkpoint tasks (type="checkpoint:*"), add:]
-@~/.claude/skills/create-plans/references/checkpoints.md
+@~/.codex/skills/create-plans/references/checkpoints.md
 </execution_context>
 
 <context>
@@ -79,7 +79,7 @@ Output: [What artifacts will be created]
 </task>
 
 <task type="checkpoint:human-verify" gate="blocking">
-  <what-built>[What Claude just built that needs verification]</what-built>
+  <what-built>[What Codex just built that needs verification]</what-built>
   <how-to-verify>
     1. Run: [command to start dev server/app]
     2. Visit: [URL to check]
@@ -136,7 +136,7 @@ After completion, create `.planning/phases/XX-name/{phase}-{plan}-SUMMARY.md`:
 
 <key_elements>
 From create-meta-prompts patterns:
-- XML structure for Claude parsing
+- XML structure for Codex parsing
 - @context references for file loading
 - Task types: auto, checkpoint:human-action, checkpoint:human-verify, checkpoint:decision
 - Action includes "what to avoid and WHY" (from intelligence-rules)
@@ -167,8 +167,8 @@ Output: Working Next.js app with JWT auth, protected routes, and user model.
 </objective>
 
 <execution_context>
-@~/.claude/skills/create-plans/workflows/execute-phase.md
-@~/.claude/skills/create-plans/templates/summary.md
+@~/.codex/skills/create-plans/workflows/execute-phase.md
+@~/.codex/skills/create-plans/templates/summary.md
 </execution_context>
 
 <context>

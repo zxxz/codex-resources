@@ -39,7 +39,7 @@ allowed-tools: SequentialThinking
 
 ## Bash Command Restrictions
 
-**Source**: Official Claude Code documentation
+**Source**: Official Codex documentation
 
 Restrict bash commands to specific patterns using wildcards.
 
@@ -141,7 +141,7 @@ allowed-tools: SequentialThinking
 Analyze the current problem from first principles.
 ```
 
-**Focus benefit**: Claude focuses purely on reasoning, no file operations
+**Focus benefit**: Codex focuses purely on reasoning, no file operations
 
 ### Pattern 4: Controlled File Operations
 
@@ -162,7 +162,7 @@ Update documentation in @ $ARGUMENTS
 
 ### Example 1: Git Commit Command
 
-**Source**: Official Claude Code documentation
+**Source**: Official Codex documentation
 
 ```markdown
 ---
@@ -208,7 +208,7 @@ Review this code for security vulnerabilities:
 
 **No allowed-tools field** = All tools available
 
-Claude can:
+Codex can:
 - Read files
 - Write files
 - Execute bash commands

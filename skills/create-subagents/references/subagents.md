@@ -28,7 +28,7 @@ Step-by-step process for consistency.
 | Field | Required | Description |
 |-------|----------|-------------|
 | `name` | Yes | Unique identifier using lowercase letters and hyphens |
-| `description` | Yes | Natural language description of purpose. Include when Claude should invoke this. |
+| `description` | Yes | Natural language description of purpose. Include when Codex should invoke this. |
 | `tools` | No | Comma-separated list. If omitted, inherits all tools from main thread |
 | `model` | No | `sonnet`, `opus`, `haiku`, or `inherit`. If omitted, uses default subagent model |
 </configuration_fields>
@@ -37,8 +37,8 @@ Step-by-step process for consistency.
 <storage_locations>
 | Type | Location | Scope | Priority |
 |------|----------|-------|----------|
-| **Project** | `.claude/agents/` | Current project only | Highest |
-| **User** | `~/.claude/agents/` | All projects | Lower |
+| **Project** | `.codex/agents/` | Current project only | Highest |
+| **User** | `~/.codex/agents/` | All projects | Lower |
 | **CLI** | `--agents` flag | Current session | Medium |
 | **Plugin** | Plugin's `agents/` dir | All projects | Lowest |
 
@@ -185,7 +185,7 @@ Use `/agents` command to see full list of available tools.
 
 <invocation>
 <automatic>
-Claude automatically selects subagents based on:
+Codex automatically selects subagents based on:
 - Task description in user's request
 - `description` field in subagent configuration
 - Current context
@@ -204,7 +204,7 @@ Users can explicitly request a subagent:
 <management>
 <using_agents_command>
 **Recommended**: Use `/agents` command for interactive management:
-- View all available subagents (built-in, user, project, plugin)
+- View all available subagents (built-in, user, project)
 - Create new subagents with guided setup
 - Edit existing subagents and their tool access
 - Delete custom subagents
@@ -213,8 +213,8 @@ Users can explicitly request a subagent:
 
 <direct_file_management>
 **Alternative**: Edit subagent files directly:
-- Project: `.claude/agents/subagent-name.md`
-- User: `~/.claude/agents/subagent-name.md`
+- Project: `.codex/agents/subagent-name.md`
+- User: `~/.codex/agents/subagent-name.md`
 
 Follow the file format specified above (YAML frontmatter + system prompt).
 </direct_file_management>
@@ -223,7 +223,7 @@ Follow the file format specified above (YAML frontmatter + system prompt).
 **Temporary**: Define subagents via CLI for session-specific use:
 
 ```bash
-claude --agents '{
+codex --agents '{
   "code-reviewer": {
     "description": "Expert code reviewer. Use proactively after code changes.",
     "prompt": "You are a senior code reviewer. Focus on quality, security, and best practices.",

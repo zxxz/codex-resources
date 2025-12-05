@@ -1,25 +1,18 @@
 ---
 name: create-subagents
-description: Expert guidance for creating, building, and using Claude Code subagents and the Task tool. Use when working with subagents, setting up agent configurations, understanding how agents work, or using the Task tool to launch specialized agents.
+description: Guidance for emulating subagents in Codex via MCP orchestration. Codex does not provide native subagents; use this when wiring command-driven Codex sessions with role-specific AGENTS.*.md configs.
 ---
 
 <objective>
-Subagents are specialized Claude instances that run in isolated contexts with focused roles and limited tool access. This skill teaches you how to create effective subagents, write strong system prompts, configure tool access, and orchestrate multi-agent workflows using the Task tool.
-
-Subagents enable delegation of complex tasks to specialized agents that operate autonomously without user interaction, returning their final output to the main conversation.
+Codex does not currently support Claude-style subagents. You can approximate them by running Codex as an MCP server and launching role-specific sessions (e.g., `AGENTS.ux-designer.md`) via scripts or automation commands. This skill covers how to structure those role configs and invoke them safely.
 </objective>
 
 <quick_start>
 <workflow>
-1. Run `/agents` command
-2. Select "Create New Agent"
-3. Choose project-level (`.claude/agents/`) or user-level (`~/.claude/agents/`)
-4. Define the subagent:
-   - **name**: lowercase-with-hyphens
-   - **description**: When should this subagent be used?
-   - **tools**: Optional comma-separated list (inherits all if omitted)
-   - **model**: Optional (`sonnet`, `opus`, `haiku`, or `inherit`)
-5. Write the system prompt (the subagent's instructions)
+1. Create a role config file such as `AGENTS.ux-designer.md` with the system prompt and guardrails.
+2. Add a shell script that launches Codex as an MCP server with that config (e.g., `./scripts/run-ux-designer.sh`).
+3. Call the script from your orchestrator/CLI when you need the specialized viewpoint.
+4. Pipe outputs back into the main conversation manually or via your automation layer.
 </workflow>
 
 <example>
@@ -52,11 +45,10 @@ Provide specific, actionable feedback with file:line references.
 <file_structure>
 | Type | Location | Scope | Priority |
 |------|----------|-------|----------|
-| **Project** | `.claude/agents/` | Current project only | Highest |
-| **User** | `~/.claude/agents/` | All projects | Lower |
-| **Plugin** | Plugin's `agents/` dir | All projects | Lowest |
+| **Project** | `.codex/agents/` or `AGENTS.*.md` in repo | Current project only | Highest |
+| **User** | `~/.codex/agents/` | All projects | Lower |
 
-Project-level subagents override user-level when names conflict.
+Project-level role configs override user-level when names conflict.
 </file_structure>
 
 <configuration>
@@ -67,7 +59,7 @@ Project-level subagents override user-level when names conflict.
 
 <field name="description">
 - Natural language description of purpose
-- Include when Claude should invoke this subagent
+- Include when Codex should invoke this subagent
 - Used for automatic subagent selection
 </field>
 
@@ -173,7 +165,7 @@ Tailor instructions to the specific task domain. Don't create generic "helper" s
 </system_prompt_guidelines>
 
 <subagent_xml_structure>
-Subagent.md files are system prompts consumed only by Claude. Like skills and slash commands, they should use pure XML structure for optimal parsing and token efficiency.
+Subagent.md files are system prompts consumed only by Codex. Like skills and slash commands, they should use pure XML structure for optimal parsing and token efficiency.
 
 <recommended_tags>
 Common tags for subagent structure:
@@ -212,7 +204,7 @@ For XML structure principles and token efficiency details, see @skills/create-ag
 
 <invocation>
 <automatic>
-Claude automatically selects subagents based on the `description` field when it matches the current task.
+Codex automatically selects subagents based on the `description` field when it matches the current task.
 </automatic>
 
 <explicit>
@@ -239,8 +231,8 @@ Run `/agents` for an interactive interface to:
 
 <manual_editing>
 You can also edit subagent files directly:
-- Project: `.claude/agents/subagent-name.md`
-- User: `~/.claude/agents/subagent-name.md`
+- Project: `.codex/agents/subagent-name.md`
+- User: `~/.codex/agents/subagent-name.md`
 </manual_editing>
 </management>
 
