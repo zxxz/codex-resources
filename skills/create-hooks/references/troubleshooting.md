@@ -11,7 +11,7 @@ Hook never executes, even when expected event occurs.
 
 **1. Enable debug mode**
 ```bash
-claude --debug
+codex --debug
 ```
 
 Look for:
@@ -23,22 +23,21 @@ Look for:
 **2. Check hook file location**
 
 Hooks must be in:
-- Project: `.claude/hooks.json`
-- User: `~/.claude/hooks.json`
-- Plugin: `{plugin}/hooks.json`
+- Project: `.codex/hooks.json`
+- User: `~/.codex/hooks.json`
 
 Verify:
 ```bash
-cat .claude/hooks.json
+cat .codex/hooks.json
 # or
-cat ~/.claude/hooks.json
+cat ~/.codex/hooks.json
 ```
 
 **3. Validate JSON syntax**
 
 Invalid JSON is silently ignored:
 ```bash
-jq . .claude/hooks.json
+jq . .codex/hooks.json
 ```
 
 If error: fix JSON syntax.
@@ -86,11 +85,11 @@ node -e "console.log(/bash/.test('Bash'))"  # false
 
 ### Solutions
 
-**Missing hook file**: Create `.claude/hooks.json` or `~/.claude/hooks.json`
+**Missing hook file**: Create `.codex/hooks.json` or `~/.codex/hooks.json`
 
 **Invalid JSON**: Use `jq` to validate and format:
 ```bash
-jq . .claude/hooks.json > temp.json && mv temp.json .claude/hooks.json
+jq . .codex/hooks.json > temp.json && mv temp.json .codex/hooks.json
 ```
 
 **Wrong matcher**: Check tool names with `--debug` and update matcher
@@ -168,14 +167,14 @@ apt-get install jq
 Use absolute paths:
 ```json
 {
-  "command": "/Users/username/.claude/hooks/script.sh"
+  "command": "/Users/username/.codex/hooks/script.sh"
 }
 ```
 
-Or use environment variables:
+Or start Codex with `--cd /path/to/project` so `.codex/hooks/script.sh` resolves from the project root:
 ```json
 {
-  "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/script.sh"
+  "command": ".codex/hooks/script.sh"
 }
 ```
 
@@ -218,7 +217,7 @@ Ensure prompt is clear:
 
 **3. Test prompt manually**
 
-Submit similar prompt to Claude directly to see response format.
+Submit similar prompt to Codex directly to see response format.
 
 ### Common issues
 
@@ -337,7 +336,7 @@ echo "{\"decision\": \"$decision\", \"reason\": \"$reason\"}"
 ## Infinite Loop in Stop Hook
 
 ### Symptom
-Stop hook runs repeatedly, Claude never stops.
+Stop hook runs repeatedly, Codex never stops.
 
 ### Cause
 Hook blocks stop without checking `stop_hook_active` flag.
@@ -433,7 +432,7 @@ chown $USER /path/to/hook.sh
 command="./script.sh"
 
 # Use
-command="$CLAUDE_PROJECT_DIR/.claude/hooks/script.sh"
+command="$PWD/.codex/hooks/script.sh"  # When Codex is launched with --cd /project/root
 ```
 
 ---
@@ -514,25 +513,26 @@ Remove overlaps or make them mutually exclusive.
 
 ---
 
-## Environment Variables Not Working
+## Working Directory Not Set
 
 ### Symptom
-`$CLAUDE_PROJECT_DIR` or other variables are empty.
+Hook scripts run outside the project root or see empty `$PWD`.
 
 ### Solutions
 
-**Check variable spelling**:
-- `$CLAUDE_PROJECT_DIR` (correct)
-- `$CLAUDE_PROJECT_ROOT` (wrong)
+**Start Codex with the working directory flag**:
+```bash
+codex --cd /path/to/project --debug
+```
 
-**Use double quotes**:
+**Use double quotes around project-relative paths**:
 ```json
 {
-  "command": "$CLAUDE_PROJECT_DIR/hooks/script.sh"
+  "command": ".codex/hooks/script.sh"
 }
 ```
 
-**In shell scripts, use from input**:
+**In shell scripts, derive the cwd from input**:
 ```bash
 #!/bin/bash
 input=$(cat)
@@ -546,7 +546,7 @@ cd "$cwd" || exit 1
 
 **Step 1**: Enable debug mode
 ```bash
-claude --debug
+codex --debug
 ```
 
 **Step 2**: Look for hook execution logs

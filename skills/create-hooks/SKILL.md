@@ -1,33 +1,31 @@
 ---
 name: create-hooks
-description: Expert guidance for creating, configuring, and using Claude Code hooks. Use when working with hooks, setting up event listeners, validating commands, automating workflows, adding notifications, or understanding hook types (PreToolUse, PostToolUse, Stop, SessionStart, UserPromptSubmit, etc).
+description: Guidance for emulating Claude-style hooks with Codex. Use when setting up external automation (scripts/CI) that respond to Codex events, since Codex lacks native hook support.
 ---
 
 <objective>
-Hooks are event-driven automation for Claude Code that execute shell commands or LLM prompts in response to tool usage, session events, and user interactions. This skill teaches you how to create, configure, and debug hooks for validating commands, automating workflows, injecting context, and implementing custom completion criteria.
-
-Hooks provide programmatic control over Claude's behavior without modifying core code, enabling project-specific automation, safety checks, and workflow customization.
+Codex does not currently expose built-in hooks. Treat "hooks" as project-level automation that your tooling or CI triggers around Codex usage (e.g., wrapping CLI commands). This skill covers how to structure those scripts to mirror common Claude hook patterns (validation, notifications, context injection) even though they execute outside Codex itself.
 </objective>
 
 <context>
-Hooks are shell commands or LLM-evaluated prompts that execute in response to Claude Code events. They operate within an event hierarchy: events (PreToolUse, PostToolUse, Stop, etc.) trigger matchers (tool patterns) which fire hooks (commands or prompts). Hooks can block actions, modify tool inputs, inject context, or simply observe and log Claude's operations.
+Hooks are shell commands or LLM-evaluated prompts that execute in response to Codex events. They operate within an event hierarchy: events (PreToolUse, PostToolUse, Stop, etc.) trigger matchers (tool patterns) which fire hooks (commands or prompts). Hooks can block actions, modify tool inputs, inject context, or simply observe and log Codex's operations.
 </context>
 
 <quick_start>
 <workflow>
-1. Create hooks config file:
-   - Project: `.claude/hooks.json`
-   - User: `~/.claude/hooks.json`
+1. Create hooks config file (consumed by your Codex wrapper/CI, not by Codex itself):
+   - Project: `.codex/hooks.json`
+   - User: `~/.codex/hooks.json`
 2. Choose hook event (when it fires)
 3. Choose hook type (command or prompt)
 4. Configure matcher (which tools trigger it)
-5. Test with `claude --debug`
+5. Test with `codex --debug`
 </workflow>
 
 <example>
 **Log all bash commands**:
 
-`.claude/hooks.json`:
+`.codex/hooks.json`:
 ```json
 {
   "hooks": {
@@ -37,7 +35,7 @@ Hooks are shell commands or LLM-evaluated prompts that execute in response to Cl
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '\"\\(.tool_input.command) - \\(.tool_input.description // \\\"No description\\\")\"' >> ~/.claude/bash-log.txt"
+            "command": "jq -r '\"\\(.tool_input.command) - \\(.tool_input.description // \\\"No description\\\")\"' >> ~/.codex/bash-log.txt"
           }
         ]
       }
@@ -59,12 +57,12 @@ This hook:
 | **PreToolUse** | Before tool execution | Yes |
 | **PostToolUse** | After tool execution | No |
 | **UserPromptSubmit** | User submits a prompt | Yes |
-| **Stop** | Claude attempts to stop | Yes |
+| **Stop** | Codex attempts to stop | Yes |
 | **SubagentStop** | Subagent attempts to stop | Yes |
 | **SessionStart** | Session begins | No |
 | **SessionEnd** | Session ends | No |
 | **PreCompact** | Before context compaction | Yes |
-| **Notification** | Claude needs input | No |
+| **Notification** | Codex needs input | No |
 
 Blocking hooks can return `"decision": "block"` to prevent the action. See [references/hook-types.md](references/hook-types.md) for detailed use cases.
 </hook_types>
@@ -153,18 +151,12 @@ See [references/input-output-schemas.md](references/input-output-schemas.md) for
 </input_output>
 
 <environment_variables>
-Available in hook commands:
-
-| Variable | Value |
-|----------|-------|
-| `$CLAUDE_PROJECT_DIR` | Project root directory |
-| `${CLAUDE_PLUGIN_ROOT}` | Plugin directory (plugin hooks only) |
-| `$ARGUMENTS` | Hook input JSON (prompt hooks only) |
+Working directory is set by launching Codex with `-C/--cd <DIR>`, so hooks run with `$PWD` at the project root. Use relative paths like `.codex/hooks/validate.sh`. Prompt hooks still receive `$ARGUMENTS` containing the hook input JSON.
 
 **Example**:
 ```json
 {
-  "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/validate.sh"
+  "command": ".codex/hooks/validate.sh"
 }
 ```
 </environment_variables>
@@ -179,7 +171,7 @@ Available in hook commands:
         "hooks": [
           {
             "type": "command",
-            "command": "osascript -e 'display notification \"Claude needs input\" with title \"Claude Code\"'"
+            "command": "osascript -e 'display notification \"Codex needs input\" with title \"Codex\"'"
           }
         ]
       }
@@ -217,7 +209,7 @@ Available in hook commands:
         "hooks": [
           {
             "type": "command",
-            "command": "prettier --write $CLAUDE_PROJECT_DIR",
+            "command": "prettier --write .",
             "timeout": 10000
           }
         ]
@@ -249,7 +241,7 @@ Available in hook commands:
 <debugging>
 Always test hooks with the debug flag:
 ```bash
-claude --debug
+codex --debug
 ```
 
 This shows which hooks matched, command execution, and output. See [references/troubleshooting.md](references/troubleshooting.md) for common issues and solutions.
@@ -303,24 +295,24 @@ This shows which hooks matched, command execution, and output. See [references/t
 - **Infinite loop prevention**: Check `stop_hook_active` flag in Stop hooks to prevent recursive triggering
 - **Timeout configuration**: Set reasonable timeouts (default: 60s) to prevent hanging
 - **Permission validation**: Ensure hook scripts have executable permissions (`chmod +x`)
-- **Path safety**: Use absolute paths with `$CLAUDE_PROJECT_DIR` to avoid path injection
+- **Path safety**: Use absolute paths resolved from the `--cd` working directory (e.g., `$PWD/.codex/hooks/...`) to avoid path injection
 - **JSON validation**: Validate hook config with `jq` before use to catch syntax errors
 - **Selective blocking**: Be conservative with blocking hooks to avoid workflow disruption
 
 **Testing protocol**:
 ```bash
 # Always test with debug flag first
-claude --debug
+codex --debug
 
 # Validate JSON config
-jq . .claude/hooks.json
+jq . .codex/hooks.json
 ```
 </security_checklist>
 
 <success_criteria>
 A working hook configuration has:
 
-- Valid JSON in `.claude/hooks.json` (validated with `jq`)
+- Valid JSON in `.codex/hooks.json` (validated with `jq`)
 - Appropriate hook event selected for the use case
 - Correct matcher pattern that matches target tools
 - Command or prompt that executes without errors

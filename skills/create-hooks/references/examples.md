@@ -13,7 +13,7 @@ Real-world hook configurations ready to use.
         "hooks": [
           {
             "type": "command",
-            "command": "osascript -e 'display notification \"Claude needs your input\" with title \"Claude Code\" sound name \"Glass\"'"
+            "command": "osascript -e 'display notification \"Codex needs your input\" with title \"Codex\" sound name \"Glass\"'"
           }
         ]
       }
@@ -31,7 +31,7 @@ Real-world hook configurations ready to use.
         "hooks": [
           {
             "type": "command",
-            "command": "notify-send 'Claude Code' 'Awaiting your input' --urgency=normal"
+            "command": "notify-send 'Codex' 'Awaiting your input' --urgency=normal"
           }
         ]
       }
@@ -72,7 +72,7 @@ Real-world hook configurations ready to use.
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '\"[\" + (.timestamp // now | todate) + \"] \" + .tool_input.command + \" - \" + (.tool_input.description // \"No description\")' >> ~/.claude/bash-log.txt"
+            "command": "jq -r '\"[\" + (.timestamp // now | todate) + \"] \" + .tool_input.command + \" - \" + (.tool_input.description // \"No description\")' >> ~/.codex/bash-log.txt"
           }
         ]
       }
@@ -91,7 +91,7 @@ Real-world hook configurations ready to use.
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '\"[\" + (now | todate) + \"] \" + .tool_name + \": \" + .tool_input.file_path' >> ~/.claude/file-operations.log"
+            "command": "jq -r '\"[\" + (now | todate) + \"] \" + .tool_name + \": \" + .tool_input.file_path' >> ~/.codex/file-operations.log"
           }
         ]
       }
@@ -110,7 +110,7 @@ Real-world hook configurations ready to use.
         "hooks": [
           {
             "type": "command",
-            "command": "jq '. + {timestamp: now}' >> ~/.claude/mcp-audit.jsonl"
+            "command": "jq '. + {timestamp: now}' >> ~/.codex/mcp-audit.jsonl"
           }
         ]
       }
@@ -329,8 +329,8 @@ echo '{"decision": "approve", "reason": "File is not protected"}'
 ```bash
 #!/bin/bash
 
-# Read sprint info from file
-sprint_info=$(cat "$CLAUDE_PROJECT_DIR/.sprint-context.txt" 2>/dev/null || echo "No sprint context available")
+# Read sprint info from file (Codex started with --cd so $PWD is the project root)
+sprint_info=$(cat "$PWD/.sprint-context.txt" 2>/dev/null || echo "No sprint context available")
 
 # Return as SessionStart context
 jq -n \
@@ -410,7 +410,7 @@ cd "$cwd" || exit 1
 # Check if there are changes
 if ! git diff --quiet; then
   git add -A
-  git commit -m "chore: auto-commit from claude session" --no-verify
+  git commit -m "chore: auto-commit from codex session" --no-verify
   echo '{"systemMessage": "Changes auto-committed"}'
 fi
 ```
@@ -503,7 +503,7 @@ transcript_path=$(echo "$input" | jq -r '.transcript_path')
 session_id=$(echo "$input" | jq -r '.session_id')
 
 # Create archive directory
-archive_dir="$HOME/.claude/archives"
+archive_dir="$HOME/.codex/archives"
 mkdir -p "$archive_dir"
 
 # Copy transcript with timestamp
@@ -522,7 +522,7 @@ echo "Session archived to $archive_dir"
         "hooks": [
           {
             "type": "command",
-            "command": "jq '. + {ended_at: now}' >> ~/.claude/session-stats.jsonl"
+            "command": "jq '. + {ended_at: now}' >> ~/.codex/session-stats.jsonl"
           }
         ]
       }
@@ -625,7 +625,7 @@ esac
 
 ## Project-Specific Hooks
 
-Use `$CLAUDE_PROJECT_DIR` for project-specific hooks:
+Launch Codex with `codex --cd /path/to/project` so hook commands run from the project root and can use relative paths:
 
 ```json
 {
@@ -635,7 +635,7 @@ Use `$CLAUDE_PROJECT_DIR` for project-specific hooks:
         "hooks": [
           {
             "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/init-session.sh"
+            "command": ".codex/hooks/init-session.sh"
           }
         ]
       }
@@ -646,7 +646,7 @@ Use `$CLAUDE_PROJECT_DIR` for project-specific hooks:
         "hooks": [
           {
             "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/validate-changes.sh"
+            "command": ".codex/hooks/validate-changes.sh"
           }
         ]
       }
